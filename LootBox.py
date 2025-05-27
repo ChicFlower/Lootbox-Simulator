@@ -2,22 +2,22 @@ from colorama import Fore
 import random
 import pygame
 
-#class Legendery_Crate:
- #      def __init__():
-  #            Legendery_Crate.Weights = ()
+class Legendery_Crate:
+    Weights = ()
 
 
-#class Epic_Crate:
 
+class Epic_Crate:
+    Weights = ()
 
-#class Rare_Crate:
+class Rare_Crate:
+    Weights = ()
 
-        
-#class Uncommon_Crate:
-       
+class Uncommon_Crate:
+    Weights = (60,35)
 
 class Common_Crate: 
-      Weights = (80,15,1,0.9,0.1)
+    Weights = (80,15,5,0.9,0.1)
 
 pygame. init()
 Collection_Sound = pygame.mixer.Sound('/home/jay-phoenix/Downloads/Ding - Sound Effect (HD).mp3')
@@ -67,7 +67,14 @@ def menu():
         menu()
 crate_number = 1
 
-
+def Congratulations():
+    global chosen_item
+    chosen_item = ''.join(chosen_item)
+    Collection_Sound.play()
+    User_Data = open(Username, 'a')
+    User_Data.write('\n')
+    User_Data.write(chosen_item)
+    print('congratulations, you just won a:', Fore.RED + chosen_item)
 
 #Opening the lootbox
 def lootbox_opening():
@@ -85,18 +92,61 @@ def lootbox_opening():
         TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendery'], weights = (Common_Crate.Weights))
         TypeOfItem = ''.join(TypeOfItem)
         print(TypeOfItem)
+    elif Crate_Type == 'Uncommon':
+        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendery'], weights = (Uncommon_Crate.Weights))
+        TypeOfItem = ''.join(TypeOfItem)
+        print(TypeOfItem)    
+    elif Crate_Type == 'Rare':
+        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendery'], weights = (Rare_Crate.Weights))
+        TypeOfItem = ''.join(TypeOfItem)
+        print(TypeOfItem)            
+    elif Crate_Type == 'Epic':
+        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendery'], weights = (Epic_Crate.Weights))
+        TypeOfItem = ''.join(TypeOfItem)
+        print(TypeOfItem)   
+    elif Crate_Type == 'Legendery':
+        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendery'], weights = (Legendery_Crate.Weights))
+        TypeOfItem = ''.join(TypeOfItem)
+        print(TypeOfItem)
 
-        if TypeOfItem == 'Common':
-            for i in range(Number_Off_Spins):
-                Item_Type = Common_Crate()
-                chosen_item = random.choices(open('Common_items.txt').readlines())
-                print(Fore.BLUE + 'opening crate', '\n...')
-                chosen_item = ''.join(chosen_item)
-                Collection_Sound.play()
-                User_Data = open(Username, 'a')
-                User_Data.write('\n')
-                User_Data.write(chosen_item)
-                print('congratulations, you just won a:', Fore.RED + chosen_item)
+
+    if TypeOfItem == 'Common':
+        global chosen_item
+        for i in range(Number_Off_Spins):
+            Item_Type = Common_Crate()
+            chosen_item = random.choices(open('Common_items.txt').readlines())
+            print(Fore.BLUE + 'opening crate', '\n...')
+            Congratulations()
+
+
+    elif TypeOfItem == 'Uncommon':
+        for i in range(Number_Off_Spins):
+            Item_Type = Uncommon_Crate()
+            chosen_item = random.choices(open('Uncommon_items.txt').readlines())
+            print(Fore.BLUE + 'opening crate', '\n...')
+            Congratulations()
+
+
+    elif TypeOfItem == 'Rare':
+        for i in range(Number_Off_Spins):
+            Item_Type = Rare_Crate()
+            chosen_item = random.choices(open('Rare_items.txt').readlines())
+            print(Fore.BLUE + 'opening crate', '\n...')
+            Congratulations()
+
+
+    elif TypeOfItem == 'Epic':
+        for i in range(Number_Off_Spins):
+            Item_Type = Epic_Crate()
+            print(Fore.BLUE + 'opening crate', '\n...')
+            Congratulations()
+
+
+    elif TypeOfItem == 'Legendery':
+        for i in range(Number_Off_Spins):
+            Item_Type = Epic_Crate()
+            print(Fore.BLUE + 'opening crate', '\n...')
+            Congratulations()
 
     start_again = input(Fore.RESET + 'would you like to spin it again?')
     #decides on whether or not it activates again
