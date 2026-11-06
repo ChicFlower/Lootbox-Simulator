@@ -21,12 +21,12 @@ class Common_Crate:
 
 # pygame. init()
 # Collection_Sound = pygame.mixer.Sound('/home/jay-phoenix/Downloads/Ding - Sound Effect (HD).mp3')
-
+username = ""
 #MENU
 def Username_Selection():
     #Asks for a username and opens a txt file, if username not recognised then either asks if they wish to make one, or opens anonymous
-    global Username
-    Username = input('what is your username?')
+    
+    username = input('what is your username?')
     Usernames = (r'Usernames.txt')
     
     #checks selected username against txt file
@@ -35,18 +35,18 @@ def Username_Selection():
         text = text.strip().split()
         
     #if it is is txt file, it carries on
-    if Username in text:
-        print('Welcome', Username)
-        User_Data = open(Username, 'a')
+    if username in text:
+        print('Welcome', username)
+        User_Data = open(username, 'a')
         menu()
     #if not in txt file, asks if it wants to create one or opens the anonymous
-    elif Username not in text:
+    elif username not in text:
         Choice = input('Would you like to create a new profile?')
         if Choice in ('Y', 'yes', 'YES', 'y'):
             f = open('Usernames.txt', 'a')
-            f.write(Username)
-            User_Data = open(Username, 'a')
-            print('Welcome', Username)
+            f.write(username)
+            User_Data = open(username, 'a')
+            print('Welcome', username)
             menu()
         elif Choice in('N', 'n', 'No', 'NO', ' no'):
             User_Data = open('Anonymous.txt', 'a')
@@ -57,21 +57,22 @@ def Username_Selection():
             Username_Selection()
 
 def menu():
-    start = input ('do you want to open a loot box')
-    if start in ('Y', 'yes', 'y', 'YES', 'Yes'):
+    start = input ('do you want to open a loot box').lower()
+    if start in ('yes', 'y'):
         lootbox_opening()
-    elif start in ('N', 'n', 'No', 'NO', 'no'):
+    elif start in ('n', 'no'):
         quit()
     else:
         print('error')
         menu()
+
 crate_number = 1
 
 def Congratulations():
     global chosen_item
     chosen_item = ''.join(chosen_item)
     # Collection_Sound.play()
-    User_Data = open(Username, 'a')
+    User_Data = open(username, 'a')
     User_Data.write('\n')
     User_Data.write(chosen_item)
     print('congratulations, you just won a:', Fore.RED + chosen_item)
@@ -89,25 +90,26 @@ def lootbox_opening():
         lootbox_opening()
 
     if Crate_Type == 'Common':
-        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendery'], weights = (Common_Crate.Weights))
+        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendary'], weights = (Common_Crate.Weights))
         TypeOfItem = ''.join(TypeOfItem)
         print(TypeOfItem)
     elif Crate_Type == 'Uncommon':
-        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendery'], weights = (Uncommon_Crate.Weights))
+        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendary'], weights = (Uncommon_Crate.Weights))
         TypeOfItem = ''.join(TypeOfItem)
         print(TypeOfItem)    
     elif Crate_Type == 'Rare':
-        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendery'], weights = (Rare_Crate.Weights))
+        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendary'], weights = (Rare_Crate.Weights))
         TypeOfItem = ''.join(TypeOfItem)
         print(TypeOfItem)            
     elif Crate_Type == 'Epic':
-        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendery'], weights = (Epic_Crate.Weights))
+        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendary'], weights = (Epic_Crate.Weights))
         TypeOfItem = ''.join(TypeOfItem)
         print(TypeOfItem)   
-    elif Crate_Type == 'Legendery':
-        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendery'], weights = (Legendery_Crate.Weights))
+    elif Crate_Type == 'Legendary':
+        TypeOfItem = random.choices(['Common','Uncommon','Rare','Epic','Legendary'], weights = (Legendery_Crate.Weights))
         TypeOfItem = ''.join(TypeOfItem)
         print(TypeOfItem)
+
 
 
     if TypeOfItem == 'Common':
@@ -142,7 +144,7 @@ def lootbox_opening():
             Congratulations()
 
 
-    elif TypeOfItem == 'Legendery':
+    elif TypeOfItem == 'Legendary':
         for i in range(Number_Off_Spins):
             Item_Type = Epic_Crate()
             print(Fore.BLUE + 'opening crate', '\n...')

@@ -1,0 +1,78 @@
+import random
+from colorama import Fore
+
+class Crates():
+    def __init__(self):
+        self.crates = ['common','uncommon','rare','epic','legendary']
+
+class Legendery_Crate:
+    Weights = ()
+
+class Epic_Crate:
+    Weights = ()
+
+class Rare_Crate:
+    Weights = ()
+
+class Uncommon_Crate:
+    Weights = (60,35)
+
+class Common_Crate: 
+    Weights = (80,15,5,0.9,0.1)
+
+def reuseable_if_statement(prompt, next_action_y, next_action_x):
+    var = input(prompt).lower()
+    if var in ("yes", "y"):
+        next_action_y
+    elif var in ("no", "no"):
+        next_action_x
+
+def user_def():
+    username = input("what is your username?")
+    USERNAMES = ('Usernames.txt')
+
+    with open(USERNAMES, 'rt') as file:
+        all_names = file.readline().strip().split()
+
+    if username in all_names:
+        print(f"Welcome back{username}")
+        user_data = open(username, 'a')
+
+    elif username not in all_names:
+        reuseable_if_statement("would you like to open a new profile?", open_username(file, username), user_data = open("Anonymous.txt", "a"))
+
+    else:
+        print("error")
+        user_def()
+
+def open_username(file, username):
+    file = open("Usernames.txt", "a")
+    file.write(username)
+    user_data = open(username, 'a')
+    print(f"Welcome {username}")
+    wanna_spin_some_crates(username, user_data)
+
+
+def wanna_spin_some_crates(username, user_data):
+    reuseable_if_statement("would you like to spin some crates?", spin_crates(username, user_data), quit())
+
+def spin_crates(username, user_data):
+    crate_type = input('what type of crate you want to open?')
+    num_spins = input('how many times would you like to spin')
+
+    if num_spins in ['1','2','3','4','5','6','7','8','9','10']:
+        num_spins = int(num_spins)
+    else:
+        print('error')
+        spin_crates()
+
+    type_of_item = random.choices(Crates.crates, weights = (Crates(crate_type.weights)))
+
+    for i in range(num_spins):
+        chosen_item = random.choices(open(f"{type_of_item}.txt").readlines())
+        user_data.write(f"\n{chosen_item}")
+        print(f"Congrats, {username} you won a: {Fore.RED}")
+
+    wanna_spin_some_crates()
+
+user_def()
