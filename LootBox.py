@@ -1,6 +1,6 @@
 from colorama import Fore
 import random
-import pygame
+# import pygame
 
 class Legendery_Crate:
     Weights = ()
@@ -19,8 +19,8 @@ class Uncommon_Crate:
 class Common_Crate: 
     Weights = (80,15,5,0.9,0.1)
 
-pygame. init()
-Collection_Sound = pygame.mixer.Sound('/home/jay-phoenix/Downloads/Ding - Sound Effect (HD).mp3')
+# pygame. init()
+# Collection_Sound = pygame.mixer.Sound('/home/jay-phoenix/Downloads/Ding - Sound Effect (HD).mp3')
 
 #MENU
 def Username_Selection():
@@ -70,7 +70,7 @@ crate_number = 1
 def Congratulations():
     global chosen_item
     chosen_item = ''.join(chosen_item)
-    Collection_Sound.play()
+    # Collection_Sound.play()
     User_Data = open(Username, 'a')
     User_Data.write('\n')
     User_Data.write(chosen_item)
